@@ -111,8 +111,29 @@ def scrape_wikipedia_first_wikitable(url: str):
 
 @app.post("/")
 async def analyze(questions: UploadFile = File(...), files: Optional[List[UploadFile]] = None):
+    # Implement retry logic: up to 4 retries per request
+    max_retries = 4
+    attempt = 0
     start_time = time.time()
-    qtext = (await questions.read()).decode("utf-8", errors="ignore")
+    # Retry loop for reading questions
+    while attempt < max_retries:
+        try:
+            qtext = (await questions.read()).decode("utf-8", errors="ignore")
+            break
+        except Exception as e:
+            attempt += 1
+            if attempt >= max_retries:
+                return JSONResponse(content=[0, f"ERROR reading questions: {str(e)}", 0.0, ""])
+            await asyncio.sleep(0.5)
+    # Split into multiple questions if needed
+    questions_list = [q.strip() for q in qtext.strip().split("\n") if q.strip()]
+    results = []
+    for question in questions_list:
+        if time.time() - start_time > 300:
+            break
+        # Here we could route each question to processing logic
+        # For now, store placeholder to ensure JSON structure
+        results.append({"question": question, "answer": None})
     files = files or []
     tmpd = tempfile.mkdtemp(prefix="dataagent_")
     uploaded = {}

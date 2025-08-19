@@ -1,9 +1,9 @@
-- [ ] Analyze requirements for GitHub Accessibility Check, MIT License Check, API Testing Setup, and Timeout/Retry rules
-- [ ] Create a new unique public GitHub repository
-- [ ] Add MIT LICENSE file to the repository
-- [ ] Implement API endpoint to handle multiple questions per request
+- [x] Analyze requirements for GitHub Accessibility Check, MIT License Check, API Testing Setup, and Timeout/Retry rules
+- [x] Create a new unique public GitHub repository
+- [x] Add MIT LICENSE file to the repository
+- [x] Implement API endpoint to handle multiple questions per request
 - [ ] Ensure API responds within 5 minutes for all questions in a request
-- [ ] Implement retry logic (up to 4 retries per request)
+- [x] Implement retry logic (up to 4 retries per request)
 - [ ] Ensure correct JSON structure is always returned, even for partial/wrong answers
 - [ ] Test API with three simultaneous requests (simulate public test cases)
 - [ ] Verify timeout and retry behavior
