@@ -110,7 +110,9 @@ def scrape_wikipedia_first_wikitable(url: str):
     return dfs[0]
 
 @app.post("/")
-async def analyze(questions: UploadFile = File(...), files: Optional[List[UploadFile]] = None):
+async def analyze(questions: Optional[UploadFile] = File(None), files: Optional[List[UploadFile]] = File(None)):
+    if questions is None:
+        return JSONResponse(content={"error": "Missing 'questions' file in form-data"}, status_code=400)
     # Implement retry logic: up to 4 retries per request
     max_retries = 4
     attempt = 0
